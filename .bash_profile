@@ -16,16 +16,22 @@ export RIPDIR RUBYLIB PATH
 
 alias ss="script/server"
 alias sc="script/console"
+alias sg="script/generate"
+alias sp="script/plugin"
 alias mm="memcached -vv"
 alias cdd="cd /Users/grzegorzkazulak/Development"
 source ~/ruby_switcher.sh
 
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:$PATH"
 export PYTHONPATH=/usr/local/lib/python2.6/site-packages
+
+# Mercurial MacOS X Leopard Fix
+
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+
+# Git aliases and functions
 function gg(){
   git commit -v -a -m "$*"
 }
-alias sg="script/generate"
 alias gs="git status"
