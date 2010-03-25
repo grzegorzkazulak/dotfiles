@@ -1,37 +1,38 @@
-export EC2_HOME=~/.ec2
-export PATH=$PATH:/Users/grzegorzkazulak/Downloads/appengine-java-sdk-1.2.1/bin
-export EC2_PRIVATE_KEY=pk-DBAVKZHOEQY4VHXULQ7664DVY67DKK4X.pem
-export EC2_CERT=cert-DBAVKZHOEQY4VHXULQ7664DVY67DKK4X.pem
-export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home/
-export EC2_URL=https://eu-west-1.ec2.amazonaws.com
-export EDITOR=mate
-export PATH=${PATH}:/Users/grzegorzkazulak/android-sdk15/tools
+if [[ -s /Users/grzegorzkazulak/.rvm/scripts/rvm ]] ; then source /Users/grzegorzkazulak/.rvm/scripts/rvm ; fi
 
-# -- start rip config -- #
-RIPDIR=/Users/grzegorzkazulak/.rip
-RUBYLIB="$RUBYLIB:$RIPDIR/active/lib"
-PATH="$PATH:$RIPDIR/active/bin"
-export RIPDIR RUBYLIB PATH
-# -- end rip config -- #
+function parse_git_dirty {
+  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
+}
 
+function parse_git_branch {
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/[\1$(parse_git_dirty)]/"
+}
+
+PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/opt/ruby-enterprise/bin:/usr/local/Cellar/gettext/0.17/bin/"
+
+export PS1='\[\e[37;1m\]\w\[\e[32;1m\] $(parse_git_branch)\[\e[37;1m\]$ \[\e[0m\]'
+
+alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
 alias ss="script/server"
 alias sc="script/console"
-alias sg="script/generate"
-alias sp="script/plugin"
 alias mm="memcached -vv"
 alias cdd="cd /Users/grzegorzkazulak/Development"
-source ~/ruby_switcher.sh
+alias redis="redis-server /usr/local/etc/redis.conf"
+# source ~/ruby_switcher.sh
 
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:$PATH"
 export PYTHONPATH=/usr/local/lib/python2.6/site-packages
-
-# Mercurial MacOS X Leopard Fix
-
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-
-# Git aliases and functions
 function gg(){
   git commit -v -a -m "$*"
 }
+alias sg="script/generate"
 alias gs="git status"
+
+export RUBY_HEAP_MIN_SLOTS=500000 
+export RUBY_HEAP_SLOTS_INCREMENT=250000
+export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1 
+export RUBY_GC_MALLOC_LIMIT=60000000 
+
+export CAPP_BUILD="/Users/grzegorzkazulak/Development/cappuccino_build"
